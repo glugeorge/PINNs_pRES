@@ -1,0 +1,6 @@
+
+*.csv
+*.pyc
+.DS_Store
+*checkpoint.py
+*checkpoint.ipynb
