@@ -1,5 +1,6 @@
 import sys
 import os
+import jax.numpy as jnp
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from gradients import vgmat, vectgrad
@@ -28,5 +29,5 @@ def gov_eqn(net, x, scales):
     eterm1 = u_x * z_range/x_range
     eterm2 = (w+w_mean/w_range)*rho_z + rho*w_z
     e1 = eterm1 + eterm2
-
-    return e1
+    terms = jnp.hstack([eterm1,eterm2])
+    return e1,terms
