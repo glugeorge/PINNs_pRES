@@ -4,43 +4,7 @@ import jax.numpy as jnp
 from jax import random
 import pandas as pd
 
-# define the basic formation of neural network
-def neural_net(params, x, scl, act_s=0):
-    '''
-    :param params: weights and biases
-    :param x: input data [matrix with shape [N, m]]; m is number of inputs)
-    :param sgn:  1 for even function and -1 for odd function
-    :return: neural network output [matrix with shape [N, n]]; n is number of outputs)
-    '''
-    # choose the activation function
-    actv = [jnp.tanh, jnp.sin][act_s]
-    # normalize the input
-    H = x  # input has been normalized
-    # separate the first, hidden and last layers
-    first, *hidden, last = params
-    # calculate the first layers output with right scale
-    H = actv(jnp.dot(H, first[0]) * scl + first[1])
-    # calculate the middle layers output
-    for layer in hidden:
-        H = jnp.tanh(jnp.dot(H, layer[0]) + layer[1])
-    # no activation function for last layer
-    var = jnp.dot(H, last[0]) + last[1]
-    return var
-    
-# initialize single network
-def init_single_net(parent_key, layer_widths):
-    params = []
-    keys = random.split(parent_key, num=len(layer_widths) - 1)
-    # create the weights and biases for the network
-    for in_dim, out_dim, key in zip(layer_widths[:-1], layer_widths[1:], keys):
-        weight_key, bias_key = random.split(key)
-        xavier_stddev = jnp.sqrt(2 / (in_dim + out_dim))
-        params.append(
-            [random.truncated_normal(weight_key, -2, 2, shape=(in_dim, out_dim)) * xavier_stddev,
-             random.truncated_normal(bias_key, -2, 2, shape=(out_dim,)) * 0]
-        )
-    return params
-    
+
 # Sampling from normalized data
 def sample(df_norm,n_samples,df_bcs):
     # df_norm is the dataframe of interest
