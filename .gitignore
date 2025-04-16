@@ -4,3 +4,5 @@
 .DS_Store
 *checkpoint.py
 *checkpoint.ipynb
+*.mat
+*Process_Ronne_pRES*
