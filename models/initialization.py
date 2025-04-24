@@ -75,6 +75,6 @@ def create_solution(df_surf,scl=1, act_s=0):
         H = jnp.interp(x0,x_s,z_s)  
         rho = 1 + (jnp.exp(pm_rho[0]) - 1) * jnp.exp((-H+z0)/jnp.exp(pm_rho[1]))
         pmu = neural_net(params[2], x, scl, act_s)
-        sol = jnp.hstack([uw,rho,pmu])
+        sol = jnp.hstack([uw,rho,jnp.exp(pmu)])
         return sol
     return f

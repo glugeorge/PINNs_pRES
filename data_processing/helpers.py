@@ -52,7 +52,6 @@ def normalize(df_filtered, df_surface, df_divide, df_bed, df_flanks):
     means_and_scales['w_mean'] = jnp.mean(w)
     means_and_scales['w_range'] = jnp.std(w) * 2
     # the divide assumes that u will vary around 0
-    # when we only take 1 half, this isn't true - effects? Change u_mean to see
     means_and_scales['u_mean'] = 0
     means_and_scales['u_range'] = jnp.std(w) * 2 # same as w_range
     # let's say the ice scaling is that of glacial ice (elmer uses 910)
